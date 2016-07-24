@@ -32,7 +32,7 @@ Zipをダウンロードする方法
 ### プロジェクトのセットアップ  
 
 ダウンロードしたプロジェクトのディレクトリで次のコマンドを実行します
- 
+
 ```
 cd ng2-hands-on/courses/quickstart
 npm install
@@ -230,8 +230,8 @@ var HEROES: Hero[] = [
 
 今、`heroes`が10個の要素を持っているので、10個の`li`要素が生成されます。
 
-この中に[class.selected]="hero === selectedHero"と(click)="onSelect(hero)"という記述があります。 
-一つ目は、hero === selectedHeroがtrueのときselectedというクラスが要素に追加されるようにしています。 
+この中に[class.selected]="hero === selectedHero"と(click)="onSelect(hero)"という記述があります。
+一つ目は、hero === selectedHeroがtrueのときselectedというクラスが要素に追加されるようにしています。
 二つ目は、clickのイベント時にonSelect(hero)という処理が実行されるようにしています。
 
 次に、`selectedHero`の詳細を表示する部分に`*ngIf="selectedHero"`という記述があります。
@@ -743,10 +743,10 @@ import { Hero } from './hero';
     </div>
 `,
 })
-export class HeroDetailComponent {
+export class HeroDetailComponent implements OnInit, OnDestroy {
     hero: Hero;
     sub: any; // rxjs.Subscription
-    
+
     constructor(
         private heroService: HeroService,
         private route: ActivatedRoute) {

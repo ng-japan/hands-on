@@ -7,9 +7,9 @@ import { Hero } from './hero';
     selector: 'my-hero-detail',
     templateUrl: 'app/hero-detail.component.html',
 })
-export class HeroDetailComponent {
-    hero: Hero;
-    sub: any; // rxjs.Subscription
+export class HeroDetailComponent implements OnInit, OnDestroy {
+  hero: Hero
+  sub: any // rxjs.Subscription
 
     constructor(
         private heroService: HeroService,

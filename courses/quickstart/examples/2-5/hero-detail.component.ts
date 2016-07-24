@@ -8,8 +8,8 @@ import { Hero } from './hero';
     templateUrl: 'app/hero-detail.component.html',
 })
 export class HeroDetailComponent implements OnInit, OnDestroy {
-  hero: Hero
-  sub: any // rxjs.Subscription
+    hero: Hero;
+    sub: any; // rxjs.Subscription
 
     constructor(
         private heroService: HeroService,

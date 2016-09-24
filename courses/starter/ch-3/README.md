@@ -1,4 +1,4 @@
-# Chapter 2: Many Heroes
+# Chapter 3: Many Heroes
 
 ## Create Our Heroes
 

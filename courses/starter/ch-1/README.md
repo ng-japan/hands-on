@@ -1,4 +1,4 @@
-# Chapter 1: Your First Angular App
+# Chapter 1: Introduction - Hello World
 
 ```
 $ ng serve

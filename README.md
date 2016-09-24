@@ -6,7 +6,5 @@
 
 | Name                              | Level    |
 |----                               |----      |
-| [Quick Start](courses/quickstart) | Beginner | 
-
-
+| [Tutorial](courses/tutorial) | Beginner | 
 

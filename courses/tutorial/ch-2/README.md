@@ -35,6 +35,7 @@ export interface Hero {
 
 ```ts
 import { Component } from '@angular/core';
+import { Hero } from './hero';
 
 @Component({
   selector: 'app-root',
@@ -86,4 +87,5 @@ export class AppComponent {
 ```
 
 テキストボックスのデータを書き換えると、同時に `{{hero.name}}` で表示しているテキストも変更されます。
-これでヒーローエディターの第一歩は完成です。
+
+これでヒーローエディターは完成です。次のチャプターに進みましょう！

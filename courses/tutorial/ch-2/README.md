@@ -1,19 +1,26 @@
-# Chapter 2: The Hero Editor
+# Chapter 2: ヒーローエディター
 
-## Declare Hero Interface
+これからシンプルなヒーローエディターを作ります
+
+## 「ヒーロー」を定義する
+
+まずはヒーローを表すオブジェクトのインタフェースを定義します。
+次のコマンドを実行して `Hero` インタフェース用のファイルを生成します。
 
 ```
 $ ng g interface Hero
 ```
 
-The command generates `src/app/hero.ts`.
+コマンドを実行すると、 `src/app/hero.ts` ファイルが生成されます。
+最初は何もプロパティを持たない空のインタフェースです。
 
 ```ts
 export interface Hero {
 }
 ```
 
-Our hero has his **id** and **name**. Update the interface.
+これからわたしたちが扱うヒーローは、 **id** と **name** を持つものとします。
+`Hero`インタフェースにプロパティを追加しましょう
 
 ```ts
 export interface Hero {
@@ -22,9 +29,9 @@ export interface Hero {
 }
 ```
 
-## Define Our First Hero
+## 一人目のヒーロー
 
-Edit `src/app/app.component.ts`
+一人目のヒーローを、`AppComponent`クラスのプロパティとして宣言しましょう。
 
 ```ts
 import { Component } from '@angular/core';
@@ -44,12 +51,14 @@ export class AppComponent {
 }
 ```
 
-- Change `title`
-- Add `hero` property and define _Windstorm_ hero.
+変更したのは次の2点です。
 
-## Display Hero
+- `title` プロパティを書き換えました
+- `hero` プロパティを追加して、 _Windstorm_ を宣言しました.
 
-Edit `src/app/app.component.html`.
+## ヒーローを表示する
+
+ヒーローを表示するために、 `AppComponent` のテンプレートを編集します。
 
 ```html
 <h1>{{title}}</h1>
@@ -58,9 +67,13 @@ Edit `src/app/app.component.html`.
 <div><label>id: </label>{{hero.id}}</div>
 ```
 
-## Hero Editor
+補間構文 `{{}}` を使い、ヒーローの名前とIDを表示しています。
 
-Edit `src/app/app.component.html`.
+## ヒーローエディターを作成する
+
+表示するだけでなく、ヒーローの名前を編集できるエディターにしましょう。
+
+テンプレートにテキストボックスを追加し、組み込みの `ngModel` ディレクティブを使って `hero` プロパティのデータとテキストボックスのデータを**バインド**します。
 
 ```html
 <h1>{{title}}</h1>
@@ -72,5 +85,5 @@ Edit `src/app/app.component.html`.
 </div>
 ```
 
-
-
+テキストボックスのデータを書き換えると、同時に `{{hero.name}}` で表示しているテキストも変更されます。
+これでヒーローエディターの第一歩は完成です。

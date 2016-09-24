@@ -1,14 +1,20 @@
-# Chapter 1: Introduction - Hello World
+# Chapter 1: はじめに - Hello World
+
+まずはAngularに慣れるために、はじめてのアプリケーションを動かしてみましょう。
+Angular-CLIで生成したアプリケーションを起動するには、次のコマンドを実行します。
 
 ```
 $ ng serve
 ```
 
-Open `http://localhost:4200` 
+コマンドを実行したら、Webブラウザで `http://localhost:4200` にアクセスしてみましょう。
+
+「app works!」と表示されればアプリケーションが起動できています。
 
 ## AppComponent
 
-Look at `src/app/app.component.ts`
+それでは、アプリケーションを動かしたままソースコードを見てみましょう。
+まず `src/app/app.component.ts` ファイルを開いてください。
 
 ```ts
 import { Component } from '@angular/core';
@@ -23,12 +29,14 @@ export class AppComponent {
 }
 ```
 
-- Define `title` as an **instance property**
-- Define `<app-root>` element by `selector: 'app-root'`
-- Import template from `./app.component.html`
-- Import style from `./app.component.css`
+ここでは次の4点に注目してください。
 
-Look at `./app.component.html`
+- クラスプロパティとして `title` プロパティが定義されている
+- `selector: 'app-root'` によって、コンポーネントは `<app-root>` 要素として定義されている
+- コンポーネントのテンプレートは `./app.component.html` から読み込んでいる
+- コンポーネントのスタイルは `./app.component.css` から読み込んでいる
+
+次に `./app.component.html` ファイルを見てみましょう
 
 ```html
 <h1>
@@ -36,9 +44,9 @@ Look at `./app.component.html`
 </h1>
 ```
 
-- `{{title}}`: **Interpolation** syntax to display data as text
+ここで使われている、 `{{title}}` は、データをテキストとして表示するための**補間**構文です。
 
-Let's change the `title` value.
+では、 `title` プロパティを変更してみましょう。
 
 ```ts
 import { Component } from '@angular/core';
@@ -53,4 +61,5 @@ export class AppComponent {
 }
 ```
 
-After compilation, your browser will be reloaded automatically.
+ソースコードを保存するとコンパイルが始まり、Webブラウザは自動的にページを再読込します。
+表示されるテキストが変わっていることが確認できたら、次のチャプターに進みましょう！

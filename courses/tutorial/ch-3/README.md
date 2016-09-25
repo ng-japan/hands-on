@@ -1,8 +1,11 @@
-# Chapter 3: Many Heroes
+# Chapter 3: 複数のヒーロー
 
-## Create Our Heroes
+ヒーローが1人では物足りないですね。
+たくさんのヒーローを作り、ヒーローの一覧と詳細を表示するページを作りましょう。
 
-Append into `src/app/app.component.ts` 
+## ヒーローのリストを作る
+
+まずはヒーローを増やしましょう。 `src/app/app.component.ts` ファイルに次の変数を追加します。 
 
 ```ts
 const HEROES: Hero[] = [
@@ -19,7 +22,7 @@ const HEROES: Hero[] = [
 ];
 ```
 
-Assign to the component's property.
+宣言した配列を `AppComponent` の `heroes` プロパティに代入しましょう。
 
 ```ts
 export class AppComponent {
@@ -28,35 +31,35 @@ export class AppComponent {
 }
 ```
 
-## Display All Heroes
+## ヒーローの一覧を表示する
 
-Edit `src/app/app.component.html`
+`AppComponent` のテンプレートを、一覧表示のために準備しましょう。
 
 ```html
 <h2>My Heroes</h2>
 <ul class="heroes">
   <li>
-    <!-- each hero goes here -->
+    <!-- 各ヒーローを表示する -->
   </li>
 </ul>
 ```
 
-### List them up with `ngFor`
+### `ngFor`
 
-Modify `<li>` tag by adding `*ngFor` built-in directive.
+配列の各要素を繰り返し表示するために、 組み込みの `*ngFor` ディレクティブを `<li>` 要素に付与します。
 
 ```html
 <li *ngFor="let hero of heroes">
 ```
 
-Similar to `for-of` stetement in JavaScript.
+`*ngFor` ディレクティブの右辺には、JavaScriptの `for-of` に似た文を書きます。
 
 ```js
 for (let hero of heroes) { 
 }
 ```
 
-Insert inner content to display data of the hero.
+あとはヒーローの情報を表示するための、内側の要素を挿入するだけです。
 
 ```html
 <li *ngFor="let hero of heroes">
@@ -64,9 +67,9 @@ Insert inner content to display data of the hero.
 </li>
 ```
 
-## Style Our Heroes
+## 見た目を整える
 
-Edit `src/app/app.component.css`
+`src/app/app.component.css` ファイルに次のスタイルシートを記入します
 
 ```css
 .heroes {
@@ -109,17 +112,23 @@ Edit `src/app/app.component.css`
 }
 ```
 
-## Select a Hero
+それらしい見た目になりましたね。
 
-Define new property, `selectedHero`, in `AppComponent`.
+## ヒーローを選択する
+
+一覧画面ができたので、リストから選択したヒーローをエディターで編集できるようにしましょう。
+
+まずは `AppComponent` に新しく `selectedHero` プロパティを追加します。
 
 ```ts
 selectedHero: Hero;
 ```
 
-### Handle `click` event
+### `click` イベントをハンドルする
 
-Add `(click)` handler to `<li>` tag.
+ヒーローが選択されたことを知るために、 `<li>` 要素のクリックイベントを利用します。
+
+テンプレート中でイベントハンドラを設定するには、 **イベントバインディング** 構文 `(event)` を使います。
 
 ```html
 <li *ngFor="let hero of heroes" (click)="onSelect(hero)">
@@ -127,7 +136,9 @@ Add `(click)` handler to `<li>` tag.
 </li>
 ```
 
-Define `onSelect` method in the component.
+イベントバインディングを使うと `()` で囲った名前のイベントのコールバックを、右辺の関数で受け取ることができます。
+コンポーネントに `onSelect` メソッドを追加しましょう。
+選択されたヒーローを `selectedHero` プロパティに代入します。
 
 ```ts
 onSelect(hero: Hero): void {
@@ -135,12 +146,11 @@ onSelect(hero: Hero): void {
 }
 ```
 
-### Editor for Selected Hero
+### 選択されたヒーローを表示する
 
-Append editor view into `src/app/app.component.html`
+前のチャプターで作成したヒーローエディターを、 `selectedHero` のために書き直して、テンプレートに追加します。
 
 ```html
-
 <h2>{{selectedHero.name}} details!</h2>
 <div><label>id: </label>{{selectedHero.id}}</div>
 <div>
@@ -149,15 +159,18 @@ Append editor view into `src/app/app.component.html`
 </div>
 ```
 
-Error happened. :/ 
+ここでアプリケーションを見てみましょう。エラーが起きていますね？
 
 ```
 TypeError: Cannot read property 'name' of undefined
 ```
 
-### Hide the Editor if Empty 
+`selectedHero` プロパティはヒーローが選択されるまで値を持っていないので、 `selectedHero.name` プロパティを参照できません。
 
-Add a `div` tag as a container and set `ngIf` built-in directive on it.
+### 非選択時にエディターを隠す 
+
+エラーを解決するために、ヒーローが非選択のときはエディターを表示しないようにしましょう。
+エディターのコンテナーとして `<div>` 要素を追加し、組み込みの `*ngIf` ディレクティブをセットします。
 
 ```html
 <div *ngIf="selectedHero">
@@ -170,9 +183,20 @@ Add a `div` tag as a container and set `ngIf` built-in directive on it.
 </div>
 ```
 
-## Style the Selected Hero
+`*ngIf` の右辺の式が _truthy_ であるときだけ、内側のテンプレートが評価されます。 
 
-Add new CSS 
+## 選択されたヒーローのスタイルを変える
+
+選択されたヒーローの `<li>` 要素に、自動的に `selected` クラスが付与されるようにしましょう。
+状態によってクラスを動的に付与したり除去したりするには、**クラスバインディング** 構文 `[class.**]` を使います。 
+
+```html
+<li *ngFor="let hero of heroes" (click)="onSelect(hero)" [class.selected]="hero === selectedHero">
+  <span class="badge">{{hero.id}}</span> {{hero.name}}
+</li>
+```
+
+選択されたヒーローのためにCSSを追加しましょう。
 
 ```css
 .selected {
@@ -186,10 +210,6 @@ Add new CSS
 }
 ```
 
-Apply `.selected` class if the hero is selected.
+これでヒーローの一覧と詳細を表示するページが完成しました。
 
-```html
-<li *ngFor="let hero of heroes" (click)="onSelect(hero)" [class.selected]="hero === selectedHero">
-  <span class="badge">{{hero.id}}</span> {{hero.name}}
-</li>
-```
+次のチャプターでは、大きくなってきた `AppComponent` をリファクタリングし、複数のコンポーネントで組み立ててみましょう。

@@ -1,16 +1,16 @@
-# Chapter 5: Service
+# Chapter 5: サービス
 
-We create a reusable service to manage our hero data calls
+ヒーローのデータを管理するために、再利用可能な**サービス**を作りましょう。
 
-## Creating a Hero Service
+## `HeroService` を作成する
 
-Generate a service file:
+前回と同様、まずはサービスを生成するコマンドを実行します。
 
 ```
 $ ng g service hero
 ```
 
-Generated files:
+コマンドを実行すると、次のファイルが生成されます。
 
 ```
 src/app
@@ -18,7 +18,7 @@ src/app
 ├── hero.service.ts
 ```
 
-Open `src/app/hero.service.ts` 
+`src/app/hero.service.ts` ファイルに `HeroService` が宣言されています。 
 
 ```ts
 import { Injectable } from '@angular/core';
@@ -31,9 +31,10 @@ export class HeroService {
 }
 ```
 
-### Getting Heroes
+### ヒーローを取得する
 
-Add a getHeroes method _stub_.
+まずは生成されたサービスのインタフェースを決めましょう。
+`HeroService` に `getHeroes` メソッドを追加します。
 
 ```ts
 import { Injectable } from '@angular/core';
@@ -43,13 +44,13 @@ export class HeroService {
 
   constructor() { }
 
-  getHeroes(): void {} // stub
+  getHeroes(): void {} // スタブ
 }
 ```
 
-### Mock Heroes
+### ヒーローのモックを作成する
 
-Cut the `HEROES` array from `app.component.ts` and paste it to a new file in the app folder named `mock-heroes.ts`.
+`src/app/app.component.ts` から `HEROES` 配列を切り取り、 新しく `src/app/mock-heroes.ts` ファイルを作って貼り付けます。 
 
 ```ts
 import { Hero } from './hero';
@@ -68,15 +69,17 @@ export const HEROES: Hero[] = [
 ];
 ```
 
-Update `heroes` property of `AppComponent`.
+`AppComponent` の `heroes` プロパティは宣言するだけにしておきます。
 
 ```ts
 heroes: Hero[];
 ```
 
-### Return Mocked Heroes
+### モックのヒーローを返す
 
-Import the mock `HEROES` and return it from the `getHeroes` method. 
+`src/app/hero.service.ts` ファイルに `import` 文を追加し、
+さきほど作った `getHeroes` メソッドから、 `HEROES` を返すようにします。
+
 
 ```ts
 import { Injectable } from '@angular/core';
@@ -94,37 +97,40 @@ export class HeroService {
 }
 ```
 
-## Use the Hero Service
+## `HeroService` を使う
 
-Use the `HeroService` in other components starting with our `AppComponent`.
+`AppComponent` をはじめ、他のコンポーネントからも `HeroService` が使えるようにしましょう。
 
-First, import the service.
+まず最初に、サービスを読み込みます。
 
 ```ts
 import { HeroService } from './hero.service';
 ```
 
-### Inject the HeroService
+### `HeroService` を**注入**する
 
-Add a constructor that also defines a private property.
+`HeroService` のインスタンスを手に入れるために、 `AppComponent` にコンストラクタを追加し、
+プライベートプロパティを宣言します。
 
 ```ts
 constructor(private heroService: HeroService) { }
 ```
 
-Open running app. Angular fail with an error
+サービスをコンポーネントのコンストラクタ引数に加えることで、Angularが生成したインスタンスをコンポーネントに渡してくれます。
+アプリケーションを起動してみましょう。ただし、エラーを起こして止まっているはずです。
 
 ```
 EXCEPTION: No provider for HeroService! (AppComponent -> HeroService)
 ```
 
-Add to the `AppModule`'s providers metadata.
+今のままでは、Angularは `HeroService` 型のインスタンスを作る_レシピ_を知りません。
+インスタンスのレシピを登録するには、 `AppModule` の `providers` にサービスを追加します。
 
 ```ts
 providers: [HeroService]
 ```
 
-Call the service from `AppComponent`.
+サービスを登録したら、コンポーネントに `getHeroes` メソッドを追加し、サービスからヒーローを取得しましょう。
 
 ```ts
 getHeroes(): void {
@@ -132,11 +138,13 @@ getHeroes(): void {
 }
 ```
 
-### `ngOnInit` Lifecycle hook
+追加した `getHeroes` メソッドは、コンポーネントの初期化のタイミングで呼び出す必要があります。
+そのタイミングを用意してくれるのが `ngOnInit` ライフサイクルフックです
 
-Angular will call it if we implement the Angular `ngOnInit` Lifecycle Hook.
+### `ngOnInit` ライフサイクルフック
 
-Write an `ngOnInit` method with our initialization logic inside and leave it to Angular to call it at the right time. 
+コンポーネントに `ngOnInit` ライフサイクルフックが実装してあれば、 Angularが呼び出してくれます。
+`ngOnInit` メソッドはコンポーネントの初期化のための正しいタイミングで呼び出されます。
 
 ```ts
 ngOnInit(): void {
@@ -144,17 +152,14 @@ ngOnInit(): void {
 }
 ```
 
-## Async Services and Promises
+## 非同期的なサービスとPromise
 
-When we do, we'll have to wait for the server to respond and we won't be able to block the UI while we wait, even if we want to (which we shouldn't) because the browser won't block.
+現実的に考えると、ヒーローのデータはサーバーのデータベースに保存されていて、Webブラウザからリクエストを送り、レスポンスを待つ必要があります。
+非同期的にヒーローを取得するように、 `getHeroes` メソッドのシグネチャーを、**Promise**を使うように変えましょう。
 
-We'll have to use some kind of asynchronous technique and that will change the signature of our getHeroes method.
+### Promiseを生成する
 
-We'll use Promises.
-
-### The Hero Service makes a Promise
-
-Update the `HeroService` with this Promise-returning `getHeroes` method.
+`HeroService` を編集し、 `getHeroes` メソッドがPromiseを返すようにします。
 
 ```ts
 getHeroes(): Promise<Hero[]> {
@@ -162,9 +167,9 @@ getHeroes(): Promise<Hero[]> {
 }
 ```
 
-### Act on the Promise
+### Promiseを扱う
 
-Pass our callback function as an argument to the Promise's `then` method.
+コンポーネントは受け取ったPromiseの `then` メソッドに、コールバック関数を渡します。
 
 ```ts
 getHeroes(): void {
@@ -172,14 +177,21 @@ getHeroes(): void {
 }
 ```
 
-## Appendix: Simulate a slow connection
+これでヒーローのデータはコンポーネントから切り出され、どこでも再利用できるようになりました。
 
-Add the following `getHeroesSlowly` method to the `HeroService`
+## おまけ: 遅い回線をシミュレートする
+
+Promiseを使った非同期処理になったとはいえ、即座に値を返すので実感がありません。
+あえて遅れて値を返して、遅い回線をシミュレートしてみましょう。
+
+`HeroService` に次のような `getHeroesSlowly` メソッドを追加します
 
 ```ts
 getHeroesSlowly(): Promise<Hero[]> {
   return new Promise<Hero[]>(resolve =>
-    setTimeout(resolve, 2000)) // delay 2 seconds
+    setTimeout(resolve, 2000)) // 2秒待つ
     .then(() => this.getHeroes());
 }
 ```
+
+コンポーネント側で、このメソッドを使ってみましょう。

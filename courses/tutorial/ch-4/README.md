@@ -1,16 +1,17 @@
-# Chapter 4: Multiple Components
+# Chapter 4: 複数のコンポーネント
 
-We refactor the master/detail view into separate components
+コンポーネントを分割し、アプリケーションのリファクタリングを行いましょう。
 
-## Making a Hero Detail Component
+## ヒーロー詳細のコンポーネントを作る
 
-Generate a component file:
+今回は、ヒーローの詳細情報を表示するコンポーネントを作成します。
+まずAngular-CLIを使ってコンポーネントのファイルを生成します。
 
 ```
 $ ng g component hero-detail
 ```
 
-Generated files:
+コマンドを実行すると、次のファイルが生成されます。
 
 ```
 src/app/hero-detail
@@ -20,7 +21,7 @@ src/app/hero-detail
 └── hero-detail.component.ts
 ```
 
-Open `src/app/hero-detail/hero-detail.component.ts` 
+`src/app/hero-detail/hero-detail.component.ts` ファイルに `HeroDetailComponent` が宣言されています。 
 
 ```ts
 import { Component, OnInit } from '@angular/core';
@@ -40,24 +41,25 @@ export class HeroDetailComponent implements OnInit {
 }
 ```
 
-### HERO DETAIL TEMPLATE
+### テンプレートを切り出す
 
-Cut the Hero Detail content from AppComponent and paste it into the new template property of HeroDetailComponent.
+`AppComponent` からエディター部分を切り取り、 `HeroDetailComponent` のテンプレートに貼り付けます。
+このとき、 `selectedHero` を `hero` に書き換えておきます。
 
-```
-<div *ngIf="selectedHero">
-  <h2>{{selectedHero.name}} details!</h2>
-  <div><label>id: </label>{{selectedHero.id}}</div>
+```html
+<div *ngIf="hero">
+  <h2>{{hero.name}} details!</h2>
+  <div><label>id: </label>{{hero.id}}</div>
   <div>
     <label>name: </label>
-    <input [(ngModel)]="selectedHero.name" placeholder="name"/>
+    <input [(ngModel)]="hero.name" placeholder="name"/>
   </div>
 </div>
 ```
 
-### ADD THE HERO PROPERTY
+### `hero` プロパティを追加する
 
-Add `hero` property to the component class;
+テンプレートから呼び出す `hero` プロパティを追加します。
 
 ```ts
 export class HeroDetailComponent implements OnInit {
@@ -72,25 +74,28 @@ export class HeroDetailComponent implements OnInit {
 }
 ```
 
-### THE HERO PROPERTY IS AN INPUT
+### `hero` プロパティを_入力_する
 
-Update the AppComponent template so that it binds its selectedHero property to the hero property of our HeroDetailComponent.
+ヒーロー詳細のコンポーネントを作りましたが、ヒーローのデータを持っているのは `AppComponent` です。
+`AppComponent` のテンプレートに `<app-hero-detail>` 要素を配置し、
+**プロパティバインディング**構文を使って `hero` プロパティに選択したヒーローを渡します。
 
 ```html
 <app-hero-detail [hero]="selectedHero"></app-hero-detail>
 ```
 
-Annotate the `hero` property with the `@Input` decorator 
+プロパティバインディングを使うには、`hero` プロパティを `@Input` デコレーターで修飾する必要があります。
 
 ```ts
 @Input() hero: Hero;
 ```
 
-## Register Your Component
+### コンポーネントを登録する
 
-See `src/app/app.module.ts`.
-`HeroDetailComponent` is Added to the `NgModule` decorator's `declarations` array. 
-This array contains the list of all components, pipes, and directives that we created and that belong in our application's module.
+さて、ここで `src/app/app.module.ts` ファイルを見てみましょう。
+今回作成した `HeroDetailComponent` は `@NgModule` デコレーターの `declarations` プロパティにセットされています。 
+この配列は、アプリケーションのモジュールに属するすべてのコンポーネントやディレクティブ、パイプを登録するものです。
+Angular-CLIのコマンドでコンポーネントを追加すると、自動的に `declarations` への登録も行われます。
 
 ```ts
 import { BrowserModule } from '@angular/platform-browser';
@@ -117,3 +122,5 @@ import { HeroDetailComponent } from './hero-detail/hero-detail.component';
 export class AppModule { }
 ```
 
+コンポーネントの作り方とデータの渡し方を習得し、テンプレートを分割することができました。
+次のチャプターでは**サービス**の作り方を学び、ヒーローのデータをコンポーネントの外から受け取るようにしてみましょう。

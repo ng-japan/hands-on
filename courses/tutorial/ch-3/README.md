@@ -213,3 +213,5 @@ TypeError: Cannot read property 'name' of undefined
 これでヒーローの一覧と詳細を表示するページが完成しました。
 
 次のチャプターでは、大きくなってきた `AppComponent` をリファクタリングし、複数のコンポーネントで組み立ててみましょう。
+
+[次へ進む](../ch-4/README.md)

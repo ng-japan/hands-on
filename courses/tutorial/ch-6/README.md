@@ -1,28 +1,33 @@
-# Chapter 6: Routing
+# Chapter 6: ルーティング
 
-We add the Angular Component Router and learn to navigate among the views
+Angularのコンポーネントルーターを使って、ビュー間の遷移について学びましょう
 
-We received new requirements for our Tour of Heroes application:
+## アプリケーションをルーティングする
 
-- Add a Dashboard view.
-- Navigate between the Heroes and Dashboard views.
-- Clicking on a hero in either view navigates to a detail view of the selected hero.
-- Clicking a deep link in an email opens the detail view for a particular hero.
-- When we’re done, users will be able to navigate the app like this:
+Tour of Heroesアプリケーションに新しく以下の要件が追加されました。
 
-When we’re done, users will be able to navigate the app like this:
+- _ダッシュボード_画面を追加する
+- _ヒーロー一覧_と_ダッシュボード_の間で画面を遷移する
+- ヒーローをクリックすると、選択したヒーローの詳細画面へ遷移する
+- 特定のヒーローの詳細画面に_ディープリンク_できるようにする
+
+すべての機能を実装すると、アプリケーションは次の図のような画面遷移を行うようになります。
 
 ![Routing \- ts](https://angular.io/resources/images/devguide/toh/nav-diagram.png)
 
-## Splitting the AppComponent
+## `AppComponent` を分割する
 
-Display of Heroes out of `AppComponent` and into its own `HeroesComponent`.
+まずは、ヒーロー一覧の表示を `AppComponent` から `HeroesComponent` に移動しましょう。
 
-### HeroesComponent
+### `HeroesComponent` を作成する
 
-- `app.component.ts` file to `heroes/heroes.component.ts` (also `.html` and `.css`)
-- `AppComponent` class to `HeroesComponent`
-- Selector `app-root` to `app-heroes`
+次の手順にしたがって、現在の `AppComponent` の機能を 新しく作成する `HeroesComponent` に移します。
+
+- `app.component.ts` ファイルを `src/app/heroes/heroes.component.ts` にリネームする (`.html` と `.css` も同様に)
+- `AppComponent` クラスを `HeroesComponent` にリネームする
+- `HeroesComponent` の `selector` を `app-root` から `app-heroes` に変更する
+
+編集後の `heroes.component.ts` ファイルは次のようになります
 
 ```ts
 @Component({
@@ -35,9 +40,10 @@ export class HeroesComponent {
 }
 ```
 
-### Create New `AppComponent`
+### 新しい `AppComponent` を作成する
 
-Create new `app.component.ts` file 
+次に、画面遷移の起点となる新しい `AppComponent` を作成します。
+`src/app/app.component.ts` ファイルを作成し、次のようにコンポーネントを作成しましょう。
 
 ```ts
 import { Component } from '@angular/core';
@@ -53,7 +59,9 @@ export class AppComponent {
 }
 ```
 
-Update `AppModule`'s `declarations`
+`HeroesComponent` に切り出したヒーロー一覧を、 `<app-heroes>` タグで表示しています。
+
+`AppComponent` を作成したら、 `AppModule` の `declarations` を更新して、必要なコンポーネントを登録します。
 
 ```ts
 declarations: [
@@ -63,17 +71,18 @@ declarations: [
 ],
 ```
 
-## Add Routing
+## ルーティングを追加する
 
-We're ready to take the next step. Instead of displaying heroes automatically, we'd like to show them after the user clicks a button. In other words, we'd like to navigate to the list of heroes.
+これでようやくルーティングを行う準備ができました。
+自動的にヒーローたちを表示する代わりに、ユーザーがボタンをクリックすることで一覧画面へ遷移させましょう。
+Angularのルーターは組み込みではない、オプショナルなモジュールです。
+`RouterModule` というAngularモジュールから、複数のモジュールやディレクティブを提供しています。
 
-We'll need the Angular Component Router.
+まずはじめに、ルートの設定から行いましょう。
 
-The Angular router is an external, optional Angular NgModule called RouterModule. The router is a combination of multiple provided services (RouterModule), multiple directives (RouterOutlet, RouterLink, RouterLinkActive), and a configuration (Routes). We'll configure our routes first.
+### ルートの設定
 
-### Configure routes
-
-Define our first route as a route to the heroes component at `src/app.routing.ts` file
+`src/app/app.routing.ts` ファイルを作成し、次のように一番最初のルートを定義しましょう。
 
 ```ts
 import { ModuleWithProviders }  from '@angular/core';
@@ -91,15 +100,14 @@ const appRoutes: Routes = [
 export const routing: ModuleWithProviders = RouterModule.forRoot(appRoutes);
 ```
 
-Export a routing constant initialized using the RouterModule.forRoot method applied to our array of routes.
+ルートの設定は、**path** と **component** をもつオブジェクトの配列で定義されます。
+`path` はルーターがマッチさせるURLのパスを、 `component` はパスがマッチした時に用いられるコンポーネントを示しています。
 
-```ts
-export const routing: ModuleWithProviders = RouterModule.forRoot(appRoutes);
-```
+このモジュールでは `RouterModule.forRoot` 関数を使って初期化したルーティングの定数をエクスポートしています。
 
-### Make the router available
+### ルーターを導入する
 
-Import the routing constant from app.routing.ts and add it the imports array of AppModule.
+定義したルーティングの定数を `AppModule` の `imports` 配列に追加して、ルーターを導入します。
 
 ```ts
 imports: [
@@ -110,18 +118,21 @@ imports: [
 ],
 ```
 
-### Router Outlet
+### `RouterOutlet` を配置する
 
-We have to tell it where by adding a `<router-outlet>` element to the bottom of the template. 
-`RouterOutlet` is one of the directives provided by the `RouterModule`. 
-The router displays each component immediately below the `<router-outlet>` as we navigate through the application.
+ルーティングを行うためには、ルーターがビューを切り替える場所を `<router-outlet>` 要素で教えてあげる必要があります。
+`RouterOutlet` は `RouterModule` から提供されるディレクティブのひとつで、
+ルーターは画面遷移のたびに、パスにマッチしたルートのコンポーネントを `<router-outlet>` 要素の直下に読み込んでくれます。
 
-### Router Links
+それではアプリケーションを起動して、アドレスバーに `localhost:4200/heroes` と入力してみましょう。
+ルート設定にしたがい、ヒーロー一覧が表示されているはずです。
 
-We don't really expect users to paste a route URL into the address bar. 
-We add an anchor tag to the template which, when clicked, triggers navigation to the `HeroesComponent`.
+### `RouterLink` で遷移する
 
-Update the template of `AppComponent`
+しかし毎回アドレスバーにパスを入力するわけにはいきません。
+代わりに、 `HeroesComponent` へ遷移するためのアンカータグをテンプレートにを追加しましょう。
+
+`AppComponent` のテンプレートを更新します。
 
 ```ts
 template: `
@@ -131,13 +142,17 @@ template: `
   `
 ```
 
-## Add a Dashboard
+`routerLink` も `RouterModule` から提供されるディレクティブのひとつです。
 
-Create a placeholder `DashboardComponent` that gives us something to navigate to and from.
+## ダッシュボードを追加する
+
+次はダッシュボードを作成しましょう。次のコマンドを実行します。
 
 ```
 $ ng g component dashboard
 ```
+
+コマンドを実行すると、 `src/app/dashboard/dashboard.component.ts` が生成されます。
 
 ```ts
 import { Component, OnInit } from '@angular/core';
@@ -157,9 +172,11 @@ export class DashboardComponent implements OnInit {
 }
 ```
 
-### Configure the dashboard route
+機能を実装する前に、まずはルーティングに `DashboardComponent` を組み込むことからはじめましょう。
 
-Import the dashboard component and add the following route definition to the `Routes` array of definitions.
+### ダッシュボードのルートを設定する
+
+`HeroesComponent` と同じように、 `app.routing.ts` に `DashboardComponent` 用のルートを追加します。
 
 ```ts
 {
@@ -168,12 +185,9 @@ Import the dashboard component and add the following route definition to the `Ro
 },
 ```
 
-#### redirectTo
+#### `redirectTo`
 
-We want the app to show the dashboard when it starts and we want to see a nice URL in the browser address bar that says `/dashboard`.
- Remember that the browser launches with `/` in the address bar.
-
-We can use a redirect route to make this happen. Add the following to our array of route definitions:
+さらに、ダッシュボードを初期の画面としたいので、 パスが空 (`/`) のときに `/dashboard` へリダイレクトするように設定を追加します。 
 
 ```ts
 {
@@ -183,9 +197,9 @@ We can use a redirect route to make this happen. Add the following to our array 
 },
 ```
 
-#### ADD NAVIGATION TO THE TEMPLATE
+#### テンプレートにナビゲーションを追加する
 
-Add a dashboard navigation link to the template, just above the _Heroes_ link.
+`AppComponent` のテンプレートにダッシュボード用の `routerLink` を追加しましょう。
 
 ```ts
 template: `
@@ -198,9 +212,10 @@ template: `
   `
 ```
 
-## Dashboard Top Heroes
+## ダッシュボードに上位のヒーローを表示する
 
-Update `DashboardComponent`'s template
+ダッシュボードは、上位4人のヒーローがひと目でわかるようなコンポーネントにしましょう。
+テンプレートを次のように更新します。
 
 ```html
 <h3>Top Heroes</h3>
@@ -213,9 +228,12 @@ Update `DashboardComponent`'s template
 </div>
 ```
 
-### Get heroes
+`*ngFor` ディレクティブを使って、ヒーローを繰り返し表示しています。
+ヒーローがクリックされたら、 `gotoDetail` メソッドが呼び出されるようにイベントバインディングも宣言しました。
 
-Open `dashboard.component.ts` and add the requisite `import` statements.
+### ダッシュボード用のヒーローを取得する
+
+`dashboard.component.ts` ファイルに次の `import` 文を追加します。
 
 ```ts
 import { Component, OnInit } from '@angular/core';
@@ -224,11 +242,13 @@ import { Hero } from '../hero';
 import { HeroService } from '../hero.service';
 ```
 
-Implement the `DashboardComponent` class like this:
+そして `DashboardComponent` クラスを次のように実装します。
 
-- Define a `heroes` array property.
-- Inject the `HeroService` in the constructor and hold it in a private `heroService` field.
-- Call the service to get heroes inside the Angular `ngOnInit` lifecycle hook.
+- `heroes` 配列をプロパティとしてもつ
+- `HeroService` のインスタンスを `heroService` プロパティに注入する.
+- `ngOnInit` ライフサイクルフックで、ヒーローのリストを取得する
+
+上位4人のヒーローは、取得した配列をスライスして作成することにします。
 
 ```ts
 export class DashboardComponent implements OnInit {
@@ -246,18 +266,24 @@ export class DashboardComponent implements OnInit {
 }
 ```
 
-## Navigate to Hero Details
+`gotoDetail` メソッドは宣言だけを行い、処理はのちほど追加します。
+先にヒーロー詳細のルートを作成する必要があります。
 
-- from the _Dashboard to a selected hero.
-- from the _Heroes list to a selected hero.
-- from a "deep link" URL pasted into the browser address bar.
+## ヒーロー詳細へ遷移する
 
-### Configure a Route with a Parameter
+現在ヒーロー詳細は `HeroesComponent` の下部に配置されていますが、次の3つの経路から遷移できなければいけません。
 
-Add a route to the `HeroDetailComponent` in `app.routing.ts` where our other routes are configured.
+- ダッシュボードからヒーローを選択する
+- ヒーロー一覧からヒーローを選択する
+- アドレスバーのURLに"ディープリンク" URLを入力する
 
-The new route is a bit unusual in that we must tell the `HeroDetailComponent` which hero to show. 
-We didn't have to tell the `HeroesComponent` or the `DashboardComponent` anything.
+これらを満たすために、ヒーロー詳細のルートを追加しましょう。
+
+### パラメーター付きのルートを設定する
+
+`HeroDetailComponent` へのルートを `app.routing.ts` に追加します。
+この新しいルートは、どのヒーローを表示するかをコンポーネントに伝えるために、少し変わっています。 
+コロン(`:`)がパスの中に含まれていますが、これはこの位置のパラメーターを `id` パラメーターとしてコンポーネントからアクセス可能にします。
 
 ```ts
 {
@@ -266,9 +292,11 @@ We didn't have to tell the `HeroesComponent` or the `DashboardComponent` anythin
 },
 ```
 
-### Revise the `HeroDetailComponent`
+これですべてのルート設定がそろいました。
 
-Rewrite the `HeroDetailComponent`
+### `HeroDetailComponent` を改修する
+
+`HeroDetailComponent` を書き直しましょう。まずは必要な `import` 文を追加します。
 
 First, add the requisite imports:
 
@@ -280,7 +308,7 @@ import { Hero } from '../hero';
 import { HeroService } from '../hero.service';
 ```
 
-Let's have the `ActivatedRoute` service and the `HeroService` injected into the constructor, saving their values in private fields:
+そして、ルーターの状態を取得するための `ActivatedRoute` とヒーローのデータを取得するための `HeroService` をコンストラクタで注入します。
 
 ```ts
 constructor(
@@ -289,7 +317,8 @@ constructor(
 }
 ```
 
-Inside the `ngOnInit` lifecycle hook, we use the params observable to extract the `id` parameter value from the `ActivatedRoute` service and use the `HeroService` to fetch the hero with that `id`.
+`ngOnInit` ライフサイクルフックの中で、`ActivatedRoute` から `id` パラメーターを抽出するために `params` を使い、
+取得した `id` をもとに、 `HeroService` からヒーローのデータを取得します。
 
 ```ts
 ngOnInit(): void {
@@ -301,9 +330,10 @@ ngOnInit(): void {
 }
 ```
 
-### Add `HeroService#getHero`
+### `HeroService#getHero` メソッドを追加する
 
-Open `HeroService` and add a `getHero` method that filters the heroes list from `getHeroes` by `id`:
+`HeroService` を開き、 `getHero` メソッドを追加します。
+`getHero` メソッドは `getHeroes` メソッドで得たリストを `id` でフィルタリングします。
 
 ```ts
 getHero(id: number): Promise<Hero> {
@@ -312,9 +342,9 @@ getHero(id: number): Promise<Hero> {
 }
 ```
 
-### Find our way back
+### "戻る"手段を用意する
 
-Add a `goBack` method that navigates backward one step in the browser's history stack.
+`goBack` メソッドを `HeroDetailComponent` に追加して、ブラウザの履歴をもとに前の画面に戻れるようにします。
 
 ```ts
 goBack(): void {
@@ -322,7 +352,7 @@ goBack(): void {
 }
 ```
 
-Add to the bottom of the component template.
+`goBack` メソッドを呼び出すボタンは、テンプレートの下部に配置しましょう。
 
 ```html
 <div *ngIf="hero">
@@ -336,9 +366,9 @@ Add to the bottom of the component template.
 </div>
 ```
 
-## Select a Dashboard Hero
+## ダッシュボードからヒーローを選択する
 
-Rewrite the `gotoDetail` method of the `DashboardComponent`. 
+`DashboardComponent` に戻り、書きかけだった `gotoDetail` メソッドに処理を追加しましょう。 
 
 ```ts
 gotoDetail(hero: Hero): void {
@@ -347,7 +377,7 @@ gotoDetail(hero: Hero): void {
 }
 ```
 
-Import the `router` reference and inject it in the constructor (along with the `HeroService`):
+`router` プロパティは、コンストラクタで `Router` サービスをインジェクトして取得します。
 
 ```ts
 import { Router } from '@angular/router';
@@ -360,16 +390,17 @@ constructor(
 }
 ```
 
-## Select a Hero in the HeroesComponent
+## `HeroesComponent` からヒーローを選択する
 
-Do something similar in the `HeroesComponent`.
+ダッシュボードと同じように `HeroesComponent` からもヒーロー詳細へ遷移します。
+その前に、 `AppComponent` から移したままで、必要のない機能を削除します。
 
-- Delete the `<h1>` at the top (forgot about it during the `AppComponent`-to-`HeroesComponent` conversion).
-- Delete the last line of the template with the `<my-hero-detail>` tags.
+- タイトルを表示していた `<h1>` タグを削除する
+- ヒーロー詳細を表示していた `<app-hero-detail>` タグを削除する
 
-### Add the mini-detail
+### 小さな詳細ビューを追加する
 
-Add the following HTML fragment at the bottom of the template where the `<my-hero-detail>` used to be:
+次のHTMLを `HeroesComponent` のテンプレートの下部に追加します。
 
 ```html
 <div *ngIf="selectedHero">
@@ -380,11 +411,11 @@ Add the following HTML fragment at the bottom of the template where the `<my-her
 </div>
 ```
 
-Update the component class along the same lines as the dashboard:
+次に、 `DashboardComponent` と同じように `gotoDetail` メソッドを実装します。
 
-1. Import the `Router`
-2. Inject the `router` in the constructor (along with the `HeroService`)
-3. Implement the `gotoDetail` method by calling the `router.navigate` method
+1. `Router` をインポートする
+2. `router` プロパティに `Router` サービスを注入する
+3. `gotoDetail` メソッドを実装し、 `router.navigate` メソッドを呼び出す
 
 ```ts
 export class HeroesComponent implements OnInit {
@@ -413,13 +444,14 @@ export class HeroesComponent implements OnInit {
 }
 ```
 
-## Appendix: Styling the App
+## おまけ: スタイルを整える
 
-The app is functional but pretty ugly. Our creative designer team provided some CSS files to make it look better.
+アプリケーションの機能は揃いましたが、見た目はイケてないですね。
+デザイナーチームが提供するCSSを使ってスタイルを整えましょう。
 
-### A Dashboard with Style 
+### ダッシュボードのスタイル 
 
-Update `dashboard.component.css`
+`dashboard.component.css` ファイルを更新します
 
 ```css
 [class*='col-'] {
@@ -484,9 +516,9 @@ h4 {
 }
 ```
 
-### Stylish Hero Details
+### ヒーロー詳細のスタイル
 
-Update `hero-detail.component.css`
+`hero-detail.component.css` を更新します
 
 ```css
 label {
@@ -520,9 +552,9 @@ button:disabled {
 }
 ```
 
-### Style the Navigation Links
+### ナビゲーションリンクのスタイル
 
-Add a `app.component.css` file to the `app` folder with the following content.
+`app.component.css` ファイルを `app.component.ts` の隣に追加し、 次のCSSを記述します
 
 ```css
 h1 {
@@ -555,15 +587,15 @@ nav a.active {
 }
 ```
 
-Set the `AppComponent`’s `styleUrls` property to this CSS file.
+作成したCSSファイルを、 `AppComponent` の `styleUrls` プロパティに追加します。
 
 ```ts
 styleUrls: ['./app.component.css'],
 ```
 
-### Global application styles
+### グローバルスタイル
 
-Update `src/styles.css`
+`src/styles.css` も次のように記述します。
 
 ```css
 /* Master Styles */
@@ -591,4 +623,5 @@ body, input[text], button {
 }
 ```
 
-**Finished**
+これでTour of Heroesのチュートリアルは終了です。お疲れ様でした！
+

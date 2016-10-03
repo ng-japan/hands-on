@@ -360,7 +360,7 @@ goBack(): void {
   <div><label>id: </label>{{hero.id}}</div>
   <div>
     <label>name: </label>
-    <input [(ngModel)]="hero.name" placeholder="name"/>
+    <input type="text" [(ngModel)]="hero.name">
   </div>
   <button (click)="goBack()">Back</button>
 </div>

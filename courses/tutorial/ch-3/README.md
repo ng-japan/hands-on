@@ -155,7 +155,7 @@ onSelect(hero: Hero): void {
 <div><label>id: </label>{{selectedHero.id}}</div>
 <div>
     <label>name: </label>
-    <input [(ngModel)]="selectedHero.name" placeholder="name"/>
+    <input type="text" [(ngModel)]="selectedHero.name">
 </div>
 ```
 
@@ -178,7 +178,7 @@ TypeError: Cannot read property 'name' of undefined
   <div><label>id: </label>{{selectedHero.id}}</div>
   <div>
     <label>name: </label>
-    <input [(ngModel)]="selectedHero.name" placeholder="name"/>
+    <input type="text" [(ngModel)]="selectedHero.name">
   </div>
 </div>
 ```

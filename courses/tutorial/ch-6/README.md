@@ -49,14 +49,18 @@ export class HeroesComponent {
 import { Component } from '@angular/core';
 @Component({
   selector: 'app-root',
-  template: `
-    <h1>{{title}}</h1>
-    <app-heroes></app-heroes>
-  `
+  templateUrl: './app.component.html'
 })
 export class AppComponent {
   title = 'Tour of Heroes';
 }
+```
+
+`src/app/app.component.html` ファイルも新しく作成し、次のようにテンプレートを記述します。
+
+```html
+<h1>{{title}}</h1>
+<app-heroes></app-heroes>
 ```
 
 `HeroesComponent` に切り出したヒーロー一覧を、 `<app-heroes>` タグで表示しています。
@@ -134,12 +138,10 @@ imports: [
 
 `AppComponent` のテンプレートを更新します。
 
-```ts
-template: `
-   <h1>{{title}}</h1>
-   <a routerLink="/heroes">Heroes</a>
-   <router-outlet></router-outlet>
-  `
+```html
+<h1>{{title}}</h1>
+<a routerLink="/heroes">Heroes</a>
+<router-outlet></router-outlet>
 ```
 
 `routerLink` も `RouterModule` から提供されるディレクティブのひとつです。

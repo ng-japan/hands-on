@@ -1,6 +1,6 @@
-<h1>
-  {{title}}
-</h1>
+<md-toolbar color="primary">
+  <span>{{title}}</span>
+</md-toolbar>
 
 <ul>
   <li *ngFor="let todo of todoList" [class.completed]="todo.completed">

@@ -11,9 +11,10 @@
   </form>
 </md-card>
 
-<ul>
-  <li *ngFor="let todo of todoList" [class.completed]="todo.completed">
-    <input type="checkbox" [(ngModel)]="todo.completed">
-    {{ todo.title }}
-  </li>
-</ul>
+<md-card>
+  <md-list>
+    <md-list-item *ngFor="let todo of todoList" [class.completed]="todo.completed">
+      <md-checkbox [(ngModel)]="todo.completed">{{ todo.title }}</md-checkbox>
+    </md-list-item>
+  </md-list>
+</md-card>

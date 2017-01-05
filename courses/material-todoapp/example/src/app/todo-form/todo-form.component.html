@@ -1,0 +1,6 @@
+<h3>Create new task</h3>
+<form (submit)="onSubmit()">
+  <md-input-container>
+    <input md-input type="text" name="title" [(ngModel)]="todoTitle" placeholder="Title" required>
+  </md-input-container>
+</form>

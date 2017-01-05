@@ -14,11 +14,7 @@ export class AppComponent {
 
   todoList = todoList;
 
-  todoTitle = "";
-
-  onSubmit() {
-    const todo: Todo = { title: this.todoTitle, completed: false };
+  onCreate(todo: Todo) {
     this.todoList.unshift(todo);
-    this.todoTitle = "";
   }
 }

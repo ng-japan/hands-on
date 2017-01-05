@@ -2,6 +2,15 @@
   <span>{{title}}</span>
 </md-toolbar>
 
+<md-card>
+  <h3>Create new task</h3>
+  <form (submit)="onSubmit()">
+    <md-input-container>
+      <input md-input type="text" name="title" [(ngModel)]="todoTitle" placeholder="Title" required>
+    </md-input-container>
+  </form>
+</md-card>
+
 <ul>
   <li *ngFor="let todo of todoList" [class.completed]="todo.completed">
     <input type="checkbox" [(ngModel)]="todo.completed">

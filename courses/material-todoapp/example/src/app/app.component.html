@@ -1,0 +1,6 @@
+<md-toolbar color="primary">
+  <span>{{title}}</span>
+</md-toolbar>
+
+<app-todo-form (submit)="addTodo($event)"></app-todo-form>
+<app-todo-list [todoList]="todoList"></app-todo-list>

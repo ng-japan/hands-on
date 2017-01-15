@@ -1,0 +1,9 @@
+<h1>
+  {{title}}
+</h1>
+
+<ul>
+  <li *ngFor="let todo of todoList" [class.completed]="todo.completed">
+    {{ todo.title }}
+  </li>
+</ul>

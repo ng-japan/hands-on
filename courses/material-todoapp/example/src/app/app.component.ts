@@ -1,8 +1,7 @@
 import { Component } from '@angular/core';
-import { NgForm } from '@angular/forms';
 
-import { Todo } from './shared/todo';
-import { todoList } from './shared/todo-list';
+import { Todo } from './todo'; 
+import { todoList } from './todo-list'; 
 
 @Component({
   selector: 'app-root',
@@ -10,11 +9,11 @@ import { todoList } from './shared/todo-list';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'Todo List';
+  title = 'Todo App';
 
   todoList = todoList;
 
-  onCreate(todo: Todo) {
+  addTodo(todo: Todo) {
     this.todoList.unshift(todo);
   }
 }

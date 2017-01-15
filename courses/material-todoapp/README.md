@@ -9,7 +9,8 @@
 このハンズオンに必要な開発環境は以下のとおりです
 
 - Node.js 6.x
-- Angular-CLI 1.0.0-beta.24
+- Angular-CLI 1.0.0-beta.25
+- JavaScript/TypeScriptのコーディングに適したテキストエディタ（[Visual Studio Code](https://code.visualstudio.com/)の使用をおすすめします。）
 
 ### Node.jsのインストール
 
@@ -51,11 +52,11 @@ $ cd todo-app
 
 ## 目次
 
-1. [はじめに - Hello World]
-2. [TODOタスクを表示しよう]
-3. [ツールバーを追加しよう]
-4. [TODOタスク作成画面を作ろう]
-4. [レイアウトを整えよう]
+1. [はじめに - Hello World](./ch-1/README.md)
+1. [Todoタスクを表示しよう](./ch-2/README.md)
+1. [Todoの状態を更新しよう](./ch-3/README.md)
+1. [Todo作成フォームを作ろう](./ch-4/README.md)
+1. [マテリアルデザインのライブラリを使おう](./ch-5/README.md)
 
 ## 参考リンク
 

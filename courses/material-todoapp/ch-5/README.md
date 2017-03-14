@@ -8,7 +8,7 @@
 次のコマンドを実行して、Angular Materialをインストールします。
 
 ```
-$ npm i -S @angular/material
+$ npm install @angular/material
 ```
 
 インストールしたら、Angular Materialが提供するテーマCSSを、`src/styles.css`で読み込みます。
@@ -60,10 +60,16 @@ export class AppModule { }
 </md-input-container>
 ```
 
-次はボタンです。こちらは、`<button>`要素に`md-button`属性を付与するだけです。
+次はボタンです。こちらは、`<button>`要素に`md-button`属性と`color`属性を付与するだけです。
 
 ```html
-<button md-button (click)="create()">Create</button>
+<button md-button color="primary" (click)="create()">Create</button>
+```
+
+`md-raised-button`属性にすれば、浮き上がってさらに目立つボタンになります。
+
+```html
+<button md-raised-button color="primary" (click)="create()">Create</button>
 ```
 
 ## Todoリストを置き換える

@@ -46,8 +46,6 @@ $ ng g component TodoList
 </ul>
 ```
 
-忘れずにCSSも移植します。
-
 次に、`TodoListComponent`に`todoList`プロパティを追加します。
 `Todo`インターフェースをimportするのを忘れないようにしましょう。
 ただし、ここでは`todoList`はimportしません。
@@ -130,13 +128,17 @@ export class TodoListComponent implements OnInit {
 <app-todo-list [todoList]="todoList"></app-todo-list>
 ```
 
-Todoリスト部分を切り出して、`AppComponent`がシンプルになりました。次のチャプターに進みましょう！
+Todoリスト部分を切り出して、`AppComponent`がシンプルになりました。
+
+### CSSの移植
+
+ところで、実は`completed`クラスを付与しているはずのTodoに取り消し線がつかなくなってることに気づきましたか？
+Angularには自動的にCSSを_スコープ化_する機能があります。
+つまり、コンポーネントのCSSは、外部に漏れ出さないということです。
+`TodoListComponent`のテンプレートには、`todo-list.component.css`の内容しか適用されません。
+`app.component.css`の内容も移植して、`TodoListComponent`に反映されることを確かめましょう。
+
+Todoリストが完成したら次のチャプターに進みましょう！
 
 [次へ進む](../ch-4/README.md)
 
-## Appendix: CSSのスコープ化
-
-ところで、Angularには自動的にCSSを_スコープ化_する機能があります。
-つまり、コンポーネントのCSSは、外部に漏れ出さないということです。
-試しに、`AppComponent`のテンプレート中で`completed`CSSクラスを使ってみましょう。
-あるいは、`app.component.css`に新たにスタイルを追加して、それが`TodoListComponent`に影響しないことも確かめてみるとよいでしょう。

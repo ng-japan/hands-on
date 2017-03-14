@@ -76,11 +76,19 @@ export const todoList: Todo[] = [
 さらに、先ほど作った`src/app/todo-list.ts`から`todoList`変数をimportし、プロパティにセットします。
 
 ```ts
-import { todoList } from './todo-list'; 
+import { Component } from '@angular/core';
+import { todoList } from './todo-list';
 
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css']
+})
 export class AppComponent {
+  title = 'Hello Angular!';
   todoList = todoList;
 }
+
 ```
 
 次に、テンプレートに`todoList`を表示するための記述を追加します。

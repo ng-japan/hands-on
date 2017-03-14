@@ -14,7 +14,7 @@ $ npm i -S @angular/material
 インストールしたら、Angular Materialが提供するテーマCSSを、`src/styles.css`で読み込みます。
 
 ```css
-@import '~@angular/material/core/theming/prebuilt/indigo-pink.css'; 
+@import '~@angular/material/core/theming/prebuilt/indigo-pink.css';
 ```
 
 ## MaterialModuleを読み込む
@@ -50,13 +50,13 @@ export class AppModule { }
 それでは順番にAngular Materialが提供するコンポーネントに置き換えていきます。
 まずは`TodoFormComponent`のテキストボックスとボタンです。
 
-`<input>`要素に対応するのは、`<md-input-container>`コンポーネントと、`md-input`ディレクティブです。
-`<input>`要素を`<md-input-container>`要素に囲み、`md-input`属性を`<input>`要素に追加します。
+`<input>`要素に対応するのは、`<md-input-container>`コンポーネントと、`mdInput`ディレクティブです。
+`<input>`要素を`<md-input-container>`要素に囲み、`mdInput`属性を`<input>`要素に追加します。
 また、`placeholder`属性を設定すると、ラベルとしても機能してくれます。
 
 ```html
 <md-input-container>
-    <input md-input type="text" [(ngModel)]="title" placeholder="Title"> 
+    <input mdInput type="text" [(ngModel)]="title" placeholder="Title">
 </md-input-container>
 ```
 

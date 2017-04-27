@@ -743,7 +743,7 @@ import { Hero } from './hero';
     </div>
 `,
 })
-export class HeroDetailComponent {
+export class HeroDetailComponent implements OnInit, OnDestroy {
     hero: Hero;
     sub: any; // rxjs.Subscription
 

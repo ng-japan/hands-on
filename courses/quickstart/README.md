@@ -588,7 +588,7 @@ bootstrap(AppComponent, [
 ```ts
 import { Component }       from '@angular/core';
 import { HeroService }     from './hero.service';
-import { ROUTER_DIRECTIVES} from './heroes.component';
+import { ROUTER_DIRECTIVES } from '@angular/router';
 @Component({
   selector: 'my-app',
   template: `

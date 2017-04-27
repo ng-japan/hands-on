@@ -9,7 +9,7 @@
 このハンズオンに必要な開発環境は以下のとおりです
 
 - Node.js 6.x
-- Angular-CLI 1.0.0-beta.24
+- Angular-CLI 1.0.x
 
 ### Node.jsのインストール
 
@@ -28,7 +28,20 @@ v6.9.1
 次のコマンドを実行してインストールしてください。
 
 ```
-$ npm install -g angular-cli
+$ npm install -g @angular/cli
+```
+
+`ng version`コマンドを実行し、正しいバージョンのAngular CLIがインストールされていることを確認してください。
+
+```
+$ng version
+    _                      _                 ____ _     ___
+   / \   _ __   __ _ _   _| | __ _ _ __     / ___| |   |_ _|
+  / △ \ | '_ \ / _` | | | | |/ _` | '__|   | |   | |    | |
+ / ___ \| | | | (_| | |_| | | (_| | |      | |___| |___ | |
+/_/   \_\_| |_|\__, |\__,_|_|\__,_|_|       \____|_____|___|
+               |___/
+@angular/cli: 1.0.1
 ```
 
 ### ハンズオン用のプロジェクトを作成
@@ -61,5 +74,5 @@ $ cd hello-angular
 ## 参考リンク
 
 - [angular/angular](https://github.com/angular/angular)
-- [angular/angular\-cli: CLI tool for Angular2](https://github.com/angular/angular-cli)
+- [angular/angular\-cli: CLI tool for Angular](https://github.com/angular/angular-cli)
 - [Tutorial: Tour of Heroes \- ts](https://angular.io/docs/ts/latest/tutorial/)

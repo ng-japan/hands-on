@@ -25,4 +25,7 @@ export class HeroDetailComponent {
     ngOnDestroy() {
         this.sub.unsubscribe();
     }
+    goBack(){
+        window.history.back();
+    }
 }

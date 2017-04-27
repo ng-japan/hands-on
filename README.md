@@ -1,6 +1,6 @@
-# ng2-hands-on-seed
+# hands-on
 
-このリポジトリは Angular日本ユーザーグループが作成したAngularのハンズオン用シードプロジェクトです。
+このリポジトリは Angular日本ユーザーグループが作成したAngularのハンズオン教材プロジェクトです。
 
 ## Courses
 

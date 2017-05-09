@@ -14,7 +14,7 @@ $ npm install @angular/material
 インストールしたら、Angular Materialが提供するテーマCSSを、`src/styles.css`で読み込みます。
 
 ```css
-@import '~@angular/material/core/theming/prebuilt/indigo-pink.css';
+@import '~@angular/material/prebuilt-themes/indigo-pink.css'; 
 ```
 
 ## MaterialModuleを読み込む

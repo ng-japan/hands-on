@@ -34,7 +34,7 @@ $ npm install -g @angular/cli
 `ng version`コマンドを実行し、正しいバージョンのAngular CLIがインストールされていることを確認してください。
 
 ```
-$ng version
+$ ng version
     _                      _                 ____ _     ___
    / \   _ __   __ _ _   _| | __ _ _ __     / ___| |   |_ _|
   / △ \ | '_ \ / _` | | | | |/ _` | '__|   | |   | |    | |
@@ -60,6 +60,29 @@ $ ng new hello-angular
 
 ```
 $ cd hello-angular
+```
+
+### Appendix: Angular Language Serviceの準備
+
+AngularにはテンプレートHTMLの記述を助ける**Language Service**という仕組みがあります。
+使用するエディタがLanguage Serviceに対応していれば、非常にスムーズなAngular開発が可能です
+
+#### Visual Studio Code
+
+Visual Studio CodeにはAngular開発チーム公式のプラグインが用意されています。
+
+[Angular Language Service](https://marketplace.visualstudio.com/items?itemName=Angular.ng-template)
+
+このプラグインをインストールするだけで、Angular Language Serviceが使用可能になります。
+
+#### WebStorm
+
+WebStormの最新バージョンではビルトインでAngular Language Serviceが組み込まれています。
+ただし使用するには対象のプロジェクトに `@angular/language-service` パッケージがインストールされている必要があります。
+次のコマンドを実行するとパッケージをインストールできます
+
+```
+$ npm install --save-dev @angular/language-service
 ```
 
 ## 目次

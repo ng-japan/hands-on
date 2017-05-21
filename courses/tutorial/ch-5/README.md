@@ -130,10 +130,11 @@ EXCEPTION: No provider for HeroService! (AppComponent -> HeroService)
 providers: [HeroService]
 ```
 
-サービスを登録したら、コンポーネントに `getHeroes` メソッドを追加し、サービスからヒーローを取得しましょう。
+サービスを登録したら、AppComponentに `getHeroes` メソッドを追加し、サービスからヒーローを取得しましょう。
 
 ```ts
-getHeroes(): void {
+// app.component.ts
+getHeroes() {
   this.heroes = this.heroService.getHeroes();
 }
 ```

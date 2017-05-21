@@ -46,6 +46,7 @@ export class HeroDetailComponent implements OnInit {
 `AppComponent` からエディター部分を切り取り、 `HeroDetailComponent` のテンプレートに貼り付けます。
 このとき、 `selectedHero` を `hero` に書き換えておきます。
 
+hero-detail.component.html 
 ```html
 <div *ngIf="hero">
   <h2>{{hero.name}} details!</h2>
@@ -81,10 +82,24 @@ export class HeroDetailComponent implements OnInit {
 **プロパティバインディング**構文を使って `hero` プロパティに選択したヒーローを渡します。
 
 ```html
-<app-hero-detail [hero]="selectedHero"></app-hero-detail>
+<h1>{{title}}</h1>
+<h2>My Heroes</h2>
+<ul class="heroes">
+  <li *ngFor="let hero of heroes" (click)="onSelect(hero)" [class.selected]="hero === selectedHero">
+    <span class="badge">{{hero.id}}</span> {{hero.name}}
+  </li>
+</ul>
+<app-hero-detail [hero]="selectedHero"><app-hero-detail>
 ```
 
 プロパティバインディングを使うには、`hero` プロパティを `@Input` デコレーターで修飾する必要があります。
+まずはhero-detail.component.tsで `Input` デコレーターをインポートします
+
+```ts
+import { Component, OnInit, Input } from '@angular/core';
+```
+
+インポートした `Input`デコレータを `hero` プロパティに付与します
 
 ```ts
 @Input() hero: Hero;

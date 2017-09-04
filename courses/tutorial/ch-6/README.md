@@ -6,10 +6,10 @@ Angularのコンポーネントルーターを使って、ビュー間の遷移�
 
 Tour of Heroesアプリケーションに新しく以下の要件が追加されました。
 
-- _ダッシュボード_画面を追加する
-- _ヒーロー一覧_と_ダッシュボード_の間で画面を遷移する
+- *ダッシュボード*画面を追加する
+- *ヒーロー一覧*と_ダッシュボード_の間で画面を遷移する
 - ヒーローをクリックすると、選択したヒーローの詳細画面へ遷移する
-- 特定のヒーローの詳細画面に_ディープリンク_できるようにする
+- 特定のヒーローの詳細画面に*ディープリンク*できるようにする
 
 すべての機能を実装すると、アプリケーションは次の図のような画面遷移を行うようになります。
 
@@ -117,7 +117,6 @@ export const routing: ModuleWithProviders = RouterModule.forRoot(appRoutes);
 imports: [
   BrowserModule,
   FormsModule,
-  HttpModule,
   routing
 ],
 ```
@@ -203,15 +202,14 @@ export class DashboardComponent implements OnInit {
 
 `AppComponent` のテンプレートにダッシュボード用の `routerLink` を追加しましょう。
 
+src/app/app.component.html 
 ```ts
-template: `
-   <h1>{{title}}</h1>
-   <nav>
-     <a routerLink="/dashboard">Dashboard</a>
-     <a routerLink="/heroes">Heroes</a>
-   </nav>
-   <router-outlet></router-outlet>
-  `
+<h1>{{title}}</h1>
+<nav>
+  <a routerLink="/dashboard">Dashboard</a>
+  <a routerLink="/heroes">Heroes</a>
+</nav>
+<router-outlet></router-outlet>
 ```
 
 ## ダッシュボードに上位のヒーローを表示する

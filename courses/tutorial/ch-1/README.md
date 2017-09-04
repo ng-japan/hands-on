@@ -25,7 +25,7 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'app works!';
+  title = 'app';
 }
 ```
 
@@ -40,7 +40,7 @@ export class AppComponent {
 
 ```html
 <h1>
-  {{title}}
+  Welcome to {{title}}!
 </h1>
 ```
 
@@ -57,7 +57,7 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'Hello Angular!';
+  title = 'Angular!';
 }
 ```
 

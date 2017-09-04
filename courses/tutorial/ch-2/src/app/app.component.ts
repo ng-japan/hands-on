@@ -7,7 +7,7 @@ import { Hero } from './hero';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'Tour of Heroes';
+  title = 'Angular!';
 
   hero: Hero = {
     id: 1,

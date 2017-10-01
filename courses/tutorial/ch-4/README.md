@@ -89,7 +89,7 @@ export class HeroDetailComponent implements OnInit {
     <span class="badge">{{hero.id}}</span> {{hero.name}}
   </li>
 </ul>
-<app-hero-detail [hero]="selectedHero"><app-hero-detail>
+<app-hero-detail [hero]="selectedHero"></app-hero-detail>
 ```
 
 プロパティバインディングを使うには、`hero` プロパティを `@Input` デコレーターで修飾する必要があります。

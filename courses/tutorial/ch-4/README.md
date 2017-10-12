@@ -75,7 +75,7 @@ export class HeroDetailComponent implements OnInit {
 }
 ```
 
-### `hero` プロパティを_入力_する
+### `hero` プロパティを入力する
 
 ヒーロー詳細のコンポーネントを作りましたが、ヒーローのデータを持っているのは `AppComponent` です。
 `AppComponent` のテンプレートに `<app-hero-detail>` 要素を配置し、

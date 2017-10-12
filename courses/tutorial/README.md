@@ -9,7 +9,7 @@
 このハンズオンに必要な開発環境は以下のとおりです
 
 - Node.js 6.x
-- Angular-CLI 1.0.x
+- Angular-CLI 1.3.x
 
 ### Node.jsのインストール
 

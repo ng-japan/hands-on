@@ -74,6 +74,29 @@ export class AppComponent {
 
 表示するだけでなく、ヒーローの名前を編集できるエディターにしましょう。
 
+まず組み込みディレクティブを使うために `@NgModule` デコレータで `FormsModule` を読み込みます。
+
+```ts
+import { BrowserModule } from '@angular/platform-browser';
+import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+
+import { AppComponent } from './app.component';
+
+@NgModule({
+  declarations: [
+    AppComponent
+  ],
+  imports: [
+    BrowserModule,
+    FormsModule,
+  ],
+  providers: [],
+  bootstrap: [AppComponent]
+})
+export class AppModule { }
+```
+
 テンプレートにテキストボックスを追加し、組み込みの `ngModel` ディレクティブを使って `hero` プロパティのデータとテキストボックスのデータを**バインド**します。
 
 ```html

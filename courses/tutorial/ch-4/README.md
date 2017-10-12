@@ -116,7 +116,6 @@ Angular-CLIのコマンドでコンポーネントを追加すると、自動的
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { HttpModule } from '@angular/http';
 
 import { AppComponent } from './app.component';
 import { HeroDetailComponent } from './hero-detail/hero-detail.component';
@@ -129,7 +128,6 @@ import { HeroDetailComponent } from './hero-detail/hero-detail.component';
   imports: [
     BrowserModule,
     FormsModule,
-    HttpModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -13,7 +13,7 @@ Tour of Heroesアプリケーションに新しく以下の要件が追加され
 
 すべての機能を実装すると、アプリケーションは次の図のような画面遷移を行うようになります。
 
-![Routing \- ts](https://angular.io/resources/images/devguide/toh/nav-diagram.png)
+![Routing \- ts](https://angular.io/generated/images/guide/toh/nav-diagram.png)
 
 ## `AppComponent` を分割する
 

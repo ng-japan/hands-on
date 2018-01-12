@@ -8,22 +8,35 @@
 次のコマンドを実行して、Angular Materialをインストールします。
 
 ```
-$ npm install @angular/material
+$ npm install --save @angular/material @angular/cdk
 ```
 
 インストールしたら、Angular Materialが提供するテーマCSSを、`src/styles.css`で読み込みます。
 
 ```css
-@import '~@angular/material/prebuilt-themes/indigo-pink.css'; 
+@import '~@angular/material/prebuilt-themes/indigo-pink.css';
 ```
 
-## MaterialModuleを読み込む
+## 必要なモジュールを読み込む
 
-Angular Materialの機能を使うには、`@angular/materal`が提供する`MaterialModule`を読み込む必要があります。
-`src/app/app.module.ts`を開き、`NgModule`デコレーターの`imports`に`MaterialModule.forRoot()`を追加します。
+Angular Materialの機能を使うには、`@angular/materal`が提供する各種モジュールを読み込む必要があります。
+`src/app/app.module.ts`を開き、`NgModule`デコレーターの`imports`に
+`BrowserAnimationsModule`,`MatFormFieldModule`,`MatInputModule`,`MatButtonModule`,`MatCheckboxModule`,`MatListModule`,`MatToolbarModule`
+を追加します。
+
+また、`@angular/materal`のいくつかのモジュールは、AngularのAnimationモジュールに依存しているので、
+`@angular/platform-browser/animations`が提供する`BrowserAnimationsModule`もimportします。
 
 ```ts
-import { MaterialModule } from '@angular/material';
+import {BrowserModule} from '@angular/platform-browser';
+import {FormsModule} from '@angular/forms';
+import {MatButtonModule, MatCheckboxModule, MatInputModule, MatFormFieldModule, MatListModule, MatToolbarModule} from '@angular/material';
+import {NgModule} from '@angular/core';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+
+import {AppComponent} from './app.component';
+import {TodoListComponent} from './todo-list/todo-list.component';
+import {TodoFormComponent} from './todo-form/todo-form.component';
 
 @NgModule({
   declarations: [
@@ -34,13 +47,18 @@ import { MaterialModule } from '@angular/material';
   imports: [
     BrowserModule,
     FormsModule,
-    HttpModule,
-    MaterialModule.forRoot(),
+    BrowserAnimationsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule,
+    MatCheckboxModule,
+    MatListModule,
+    MatToolbarModule
   ],
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {}
 ```
 
 これで準備完了です。
@@ -50,46 +68,46 @@ export class AppModule { }
 それでは順番にAngular Materialが提供するコンポーネントに置き換えていきます。
 まずは`TodoFormComponent`のテキストボックスとボタンです。
 
-`<input>`要素に対応するのは、`<md-input-container>`コンポーネントと、`mdInput`ディレクティブです。
-`<input>`要素を`<md-input-container>`要素に囲み、`mdInput`属性を`<input>`要素に追加します。
+`<input>`要素に対応するのは、`<mat-form-field>`コンポーネントと、`matInput`ディレクティブです。
+`<input>`要素を`<mat-form-field>`要素に囲み、`matInput`属性を`<input>`要素に追加します。
 また、`placeholder`属性を設定すると、ラベルとしても機能してくれます。
 
 ```html
-<md-input-container>
-    <input mdInput type="text" [(ngModel)]="title" placeholder="Title">
-</md-input-container>
+<mat-form-field>
+  <input matInput [(ngModel)]="title" placeholder="Title">
+</mat-form-field>
 ```
 
-次はボタンです。こちらは、`<button>`要素に`md-button`属性と`color`属性を付与するだけです。
+次はボタンです。こちらは、`<button>`要素に`mat-button`属性と`color`属性を付与するだけです。
 
 ```html
-<button md-button color="primary" (click)="create()">Create</button>
+<button mat-button color="primary" (click)="create()">create</button>
 ```
 
-`md-raised-button`属性にすれば、浮き上がってさらに目立つボタンになります。
+`mat-raised-button`属性にすれば、浮き上がってさらに目立つボタンになります。
 
 ```html
-<button md-raised-button color="primary" (click)="create()">Create</button>
+<button mat-raised-button color="primary" (click)="create()">Create</button>
 ```
 
 ## Todoリストを置き換える
 
-`<ul>`要素と`<li>`要素は、それぞれ`<md-list>`要素と`<md-list-item>`要素に置き換えます。
+`<ul>`要素と`<li>`要素は、それぞれ`<mat-list>`要素と`<mat-list-item>`要素に置き換えます。
 
 ```html
-<md-list>
-  <md-list-item *ngFor="let todo of todoList" [class.completed]="todo.completed">
+<mat-list>
+  <mat-list-item *ngFor="let todo of todoList" [class.completed]="todo.completed">
     <input type="checkbox" [(ngModel)]="todo.completed">
     {{ todo.title }}
-  </md-list-item>
-</md-list>
+  </mat-list-item>
+</mat-list>
 ```
 
-チェックボックスは`<md-checkbox>`要素に置き換えます。
-この時、`<md-checkbox>`要素の内側に`{{todo.title}}`を移動します。
+チェックボックスは`<mat-checkbox>`要素に置き換えます。
+この時、`<mat-checkbox>`要素の内側に`{{todo.title}}`を移動します。
 
 ```html
-<md-checkbox [(ngModel)]="todo.completed">{{ todo.title }}</md-checkbox>
+<mat-checkbox [(ngModel)]="todo.completed">{{ todo.title }}</mat-checkbox>
 ```
 
 いい感じの見た目になってきましたね。次が最後のひと押しです。
@@ -97,12 +115,12 @@ export class AppModule { }
 ## ツールバーを作る
 
 最後に、今までただ`<h1>`要素で表示していたタイトルを、マテリアルデザインのツールバーにしてみましょう。
-ツールバーは`<md-toolbar>`要素を使います。タイトル部分は`<span>`要素に変更し、テーマの_primary_カラーを使うように指定します。
+ツールバーは`<mat-toolbar>`要素を使います。タイトル部分は`<span>`要素に変更し、テーマの_primary_カラーを使うように指定します。
 
 ```html
-<md-toolbar color="primary">
+<mat-toolbar color="primary">
   <span>{{title}}</span>
-</md-toolbar>
+</mat-toolbar>
 ```
 
 あっという間に素敵なアプリケーションに生まれ変わりました。

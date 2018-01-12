@@ -8,7 +8,7 @@
 
 このハンズオンに必要な開発環境は以下のとおりです
 
-- Node.js 6系
+- Node.js 9系
 - Angular-CLI
 - JavaScript/TypeScriptのコーディングに適したテキストエディタ（[Visual Studio Code](https://code.visualstudio.com/)の使用をおすすめします。）
 
@@ -20,7 +20,7 @@
 
 ```
 $ node -v
-v6.9.5
+v9.3.0
 ```
 
 ### Angular-CLIのインストール
@@ -42,7 +42,7 @@ $ ng version
 | (_| || | | || (_| || |_| || || (_| || |  |_____|| (__ | || |
  \__,_||_| |_| \__, | \__,_||_| \__,_||_|          \___||_||_|
                |___/
-@angular/cli: 1.0.0-beta.30
+@angular/cli: 1.6.3
 node: 6.9.5
 os: darwin x64
 ```

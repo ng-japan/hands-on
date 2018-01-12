@@ -30,7 +30,7 @@ Todo作成フォームと言っても、必要なのはテキストボックス�
 まずは簡単に`<input>`要素と`<button>`要素を配置しましょう。
 
 ```html
-<input type="text"> 
+<input type="text">
 <button>Create</button>
 ```
 
@@ -66,7 +66,7 @@ export class TodoFormComponent implements OnInit {
 
 
 ```html
-<input type="text" [(ngModel)]="title"> 
+<input type="text" [(ngModel)]="title">
 ```
 
 バインディングが成功したことがわかるように、`create()`メソッドで表示するアラートで`title`プロパティを表示してみましょう。

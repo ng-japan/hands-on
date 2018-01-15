@@ -3,6 +3,33 @@
 リストの表示はできましたが、このままではTodoを完了できません。
 画面上でTodoの状態を変えられるようにしましょう。
 
+## 準備: FormsModuleを読み込む
+Angularの双方向データバインディング機能などを使用するためには、
+`@angular/forms`が提供する`FormsModule`を読み込む必要があります。
+`src/app/app.module.ts`を開き、`NgModule`デコレーターの`imports`に`FormsModule`を追加します。
+
+```ts
+import { BrowserModule } from '@angular/platform-browser';
+import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+
+import { AppComponent } from './app.component';
+
+@NgModule({
+  declarations: [
+    AppComponent
+  ],
+  imports: [
+    BrowserModule,
+    FormsModule
+  ],
+  providers: [],
+  bootstrap: [AppComponent]
+})
+export class AppModule { }
+
+```
+
 ## チェックボックスと状態を同期する
 
 Todoの完了状態を更新するのに、新しくチェックボックスを配置してみましょう。
@@ -141,4 +168,3 @@ Angularには自動的にCSSを_スコープ化_する機能があります。
 Todoリストが完成したら次のチャプターに進みましょう！
 
 [次へ進む](../ch-4/README.md)
-

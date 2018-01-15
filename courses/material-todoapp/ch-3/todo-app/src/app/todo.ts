@@ -1,4 +1,4 @@
 export interface Todo {
-    title: string;
-    completed: boolean;
+  title: string;
+  completed: boolean;
 }

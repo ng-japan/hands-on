@@ -1,12 +1,12 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { HttpModule } from '@angular/http';
-import { MaterialModule } from '@angular/material';
+import {BrowserModule} from '@angular/platform-browser';
+import {FormsModule} from '@angular/forms';
+import {MatButtonModule, MatCheckboxModule, MatInputModule, MatFormFieldModule, MatListModule, MatToolbarModule} from '@angular/material';
+import {NgModule} from '@angular/core';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
-import { AppComponent } from './app.component';
-import { TodoListComponent } from './todo-list/todo-list.component';
-import { TodoFormComponent } from './todo-form/todo-form.component';
+import {AppComponent} from './app.component';
+import {TodoListComponent} from './todo-list/todo-list.component';
+import {TodoFormComponent} from './todo-form/todo-form.component';
 
 @NgModule({
   declarations: [
@@ -17,10 +17,15 @@ import { TodoFormComponent } from './todo-form/todo-form.component';
   imports: [
     BrowserModule,
     FormsModule,
-    HttpModule,
-    MaterialModule.forRoot(),
+    BrowserAnimationsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule,
+    MatCheckboxModule,
+    MatListModule,
+    MatToolbarModule
   ],
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {}

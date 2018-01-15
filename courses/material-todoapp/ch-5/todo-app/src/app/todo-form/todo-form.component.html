@@ -1,4 +1,4 @@
-<md-input-container>
-    <input md-input type="text" [(ngModel)]="title" placeholder="Title"> 
-</md-input-container>
-<button md-button (click)="create()">Create</button>
+<mat-form-field>
+  <input matInput [(ngModel)]="title" placeholder="Title">
+</mat-form-field>
+<button mat-button color="primary" (click)="create()">create</button>
